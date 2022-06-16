@@ -24,7 +24,29 @@ function findNeighbors(node, matrix) {
 
 
 function bfsPath(matrix, startNode, endValue) {
-    // Your code here
+    let array = []
+
+    const queue = [startNode]
+    const visited = new Set()
+    visited.add(`[${startNode[0]},${startNode[1]}]`)
+
+    while(queue.length){
+        let curr = queue.shift()
+        visited.add(`[${curr[0]},${curr[1]}]`)
+        array.push(curr)
+        if (matrix[curr[0]][curr[1]] === endValue){return array}
+        let neighbors = findNeighbors(curr, matrix)
+        for (neighbor of neighbors){
+            if(!visited.has(`[${neighbor[0]},${neighbor[1]}]`)){
+                queue.push(neighbor)
+                visited.add(`[${neighbor[0]},${neighbor[1]}]`)
+            }
+
+        }
+
+    }
+    return false
+
 }
 
 
@@ -38,7 +60,7 @@ const matrix1 = [
 ];
 
 // // EXAMPLE TESTS #1. Tests for findNeighbors function
-console.log(findNeighbors([1, 1], matrix1)) // Finds all 4 neighbors from an
+//console.log(findNeighbors([1, 1], matrix1)) // Finds all 4 neighbors from an
 // // internal node (left, right, down, up)
 // // [ [ 0, 1 ], [ 2, 1 ], [ 1, 2 ], [ 1, 0 ] ]
 
@@ -51,7 +73,7 @@ console.log(findNeighbors([1, 1], matrix1)) // Finds all 4 neighbors from an
 
 // EXAMPLE TESTS #2. Tests for bfsPath function
 
-// console.log(bfsPath(matrix1, [0,0], 16)); // can traverse the entire matrix
+console.log(bfsPath(matrix1, [0,0], 16)); // can traverse the entire matrix
 // returns an array of coordinates with no duplicates:
 
 // [
